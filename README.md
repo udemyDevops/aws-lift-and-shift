@@ -31,11 +31,12 @@ sql dump file:
     * backend
 - user request to ALB on 443 or 80 if not using certificate
 - ALB to tomcat on 8080
-- Tomcat to
+- Tomcat to backend
     * MySql on 3306
     * RabbitMQ on 5672
     * Memecache on 11211
     * these ports are in src/main/resources/application.properties
+- allow all within the backend
 - Also port 22 to ssh the above services
 
 ![alt text](aws-arch.png)

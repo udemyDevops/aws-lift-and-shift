@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# this script is for CentOS (used in vprofile-project-vm)
 TOMURL="https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.26/bin/apache-tomcat-10.1.26.tar.gz"
 dnf -y install java-17-openjdk java-17-openjdk-devel
 dnf install git wget unzip zip -y

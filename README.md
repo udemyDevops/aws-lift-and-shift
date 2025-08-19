@@ -29,7 +29,7 @@ sql dump file:
     * ALB
     * tomcat
     * backend
-- user request on 443
+- user request to ALB on 443 or 80 if not using certificate
 - ALB to tomcat on 8080
 - Tomcat to
     * MySql on 3306

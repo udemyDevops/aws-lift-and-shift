@@ -25,5 +25,18 @@ sql dump file:
 
 * In cloud, use ALB instead of nginx as frontend and other cloud services like r53, auto-scaling for tomcat, s3, aws certificate manager to allow only https
 
+- 3 security groups
+    * ALB
+    * tomcat
+    * backend
+- user request on 443
+- ALB to tomcat on 8080
+- Tomcat to
+    * MySql on 3306
+    * RabbitMQ on 5672
+    * Memecache on 11211
+    * these ports are in src/main/resources/application.properties
+- Also port 22 to ssh the above services
+
 ![alt text](aws-arch.png)
 

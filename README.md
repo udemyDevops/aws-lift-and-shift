@@ -23,7 +23,7 @@ sql dump file:
 - > mysql -u <user_name> -p accounts < db_backup.sql
 
 
-* In cloud, use ALB instead of nginx as frontend and other cloud services like r53, auto-scaling for tomcat, s3, aws certificate manager to allow only https
+* In cloud, use ALB instead of nginx as frontend and ec2 instances for other services. Othr cloud services are also used like r53, auto-scaling for tomcat, s3, aws certificate manager to allow only https 
 
 - 3 security groups
     * ALB

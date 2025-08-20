@@ -35,9 +35,65 @@ sql dump file:
     * MySql on 3306
     * RabbitMQ on 5672
     * Memecache on 11211
-    * these ports are in src/main/resources/application.properties
+    * these ports are in src/main/resources/application.properties (also need to update the host names of servers with DNS name, can use private DNS zone)
 - allow all within the backend
 - Also port 22 to ssh the above services
 
 ![alt text](aws-arch.png)
+
+
+* After setting up the servers and DNS records
+    - create s3 bucket to store the artifacts (if required create IAM user and attach s3 full access policy which can be used for aws configure)
+    - create an IAM role for ec2 service and attach s3 full access policy....... assign this role to tomcat server
+    - use Maven to build the application artifact
+        * before building, make sure to update the host details in src/main/resources/application.properties file with the DNS names or private IPs
+        * In VS code, press 'ctrl+shift+P' and type 'select Default profile' and select the terminal (Gitbash or preferred one). Check if maven is installed (mvn -version), if not need to install JDK and maven (follow the installing softwares lecture)
+        * after checking/installing maven, change the working directory to the one where 'pom.xml' exist and run the below command to build which will create 'target' folder having the artifact (.war file) 
+        ```
+        mvn install
+        ```
+    - push the artifacts to s3 bucket using aws cli
+        * connect to aws
+            ```
+            aws configure
+            ```
+            Note: if need to modify access key or access Id of 'aws configure' can edit using the command in gitbash
+            ```
+            vim ~/.aws/credentials
+            ```
+            to edit the region and output format
+            ```
+            vim ~/.aws/config
+            ```
+            * push the artifact to s3 bucket
+            ```
+            aws s3 <path of .war file> s3://<bucketname>
+            ```
+            - to push into a sub folder in the bucket
+            ```
+            aws s3 <path of .war file> s3://<bucket name>/<folder name>
+            ```
+            - to list the bucket content
+            ```
+            aws s3 ls s3://<bucket name>/<folder name>
+            ```
+    - Login to app server and fetch the artifact from s3 bucket
+        * can use 'apt' command on ubuntu to install a package but can also use 'snap' package manager. The below command installs aws cli on the app server
+        ```
+        snap install aws-cli --classic
+        ```
+        * copy the artifact from s3 bucket (no need for aws configure as the app server has the IAM role assigned in earlier steps to use s3)
+        ```
+        aws s3 cp s3://<bucket name>/<folder name>/<artifact name> <destination>
+        ```
+            assuming no sub folder in the s3 bucket
+
+            eg: aws s3 cp s3://vprofile-project/vprofile-v2.war /tmp/
+
+
+            if there is any sub folder
+
+            eg: aws s3 cp s3://vprofile-project/artifact-folder/vprofile-v2.war /tmp/
+
+
 

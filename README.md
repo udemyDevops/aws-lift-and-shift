@@ -30,7 +30,7 @@ sql dump file:
     * tomcat
     * backend
 - user request to ALB on 443 or 80 if not using certificate
-- ALB to tomcat on 8080
+- ALB to tomcat on 8080 (also a rule to allow client IP on 8080)
 - Tomcat to backend
     * MySql on 3306
     * RabbitMQ on 5672
@@ -44,7 +44,7 @@ sql dump file:
 
 * After setting up the servers and DNS records
     - create s3 bucket to store the artifacts (if required create IAM user and attach s3 full access policy which can be used for aws configure)
-    - create an IAM role for ec2 service and attach s3 full access policy....... assign this role to tomcat server
+    - create an IAM role for ec2 service and attach s3 full access policy....... assign this role to tomcat server --> Actions --> security --> manage IAM role
     - use Maven to build the application artifact
         * before building, make sure to update the host details in src/main/resources/application.properties file with the DNS names or private IPs
         * In VS code, press 'ctrl+shift+P' and type 'select Default profile' and select the terminal (Gitbash or preferred one). Check if maven is installed (mvn -version), if not need to install JDK and maven (follow the installing softwares lecture)
@@ -126,5 +126,20 @@ sql dump file:
            systemctl start tomcat<version>
            ```
 
+* Setting up load balancer
+    - create a target group of type 'instances'
+        * select protocol HTTP and port 8080 (for tomcat) also in health check ---> advanced setting ---> health check port --> override --> 8080 ---> next --> select the app server instance and port 8080 --> click 'include as pendin below' --> create target group
+    - Create a certificate for the domain in ACM (aws certificate manager) to use HTTPS port for ALB
+    - Create ALB and add CNAME record for its endpoint (u&p -- admin_vp)
+        * use its endpoint for HTTP
+        * use DNS name for HTTPS
+
+* To auto scale the app instance
+    - create AMI for app server --> actions --> image and templates --> create image
+    - create a launch template to be used for auto scaling group
+        * select the snapshot AMI, instnace type, security group
+        * under advanced details --> select IAM role created for app server (s3 full access), useful in CI/CD
+    - create auto scaling group
+    - in the target group --> attributes --> edit --> turn on stickiness (required for vprofile application, without this if the request is directed to another instance on subsequent access it will ask to login again)
 
 

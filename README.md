@@ -94,6 +94,37 @@ sql dump file:
             if there is any sub folder
 
             eg: aws s3 cp s3://vprofile-project/artifact-folder/vprofile-v2.war /tmp/
+        
+        * deploy the artifact
+            - first stop the tomcat service
+            ```
+            systemctl stop tomcat<version>
+            ```
+            if any warning of change in source configuration....
+            ```
+            systemctl daemon-reload
+            ```
+            ```
+           systemctl stop tomcat<version>
+           ```
+           - remove the default application (ROOT folder) in tomcat at below path (ubuntu)
+
+           ```
+           ls /var/lib/tomcat<versoin>/webapps/
+           ```    
+           ```
+           rm -rf /var/lib/tomcat<versoin>/webapps/ROOT
+           ```
+
+           - Copy the artifact 
+           ```
+           cp /tmp/<artifact-file.war> /var/lib/tomcat<versoin>/webapps/ROOT.war
+           ```
+
+           - start the tomcat service which will extract the ROOT.war file
+           ```
+           systemctl start tomcat<version>
+           ```
 
 
 

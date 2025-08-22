@@ -57,7 +57,7 @@ sql dump file:
             ```
             aws configure
             ```
-            Note: if need to modify access key or access Id of 'aws configure' can edit using the command in gitbash
+            > Note: if need to modify access key or access Id of 'aws configure' can edit using the command in gitbash
             ```
             vim ~/.aws/credentials
             ```
@@ -65,7 +65,7 @@ sql dump file:
             ```
             vim ~/.aws/config
             ```
-            * push the artifact to s3 bucket
+        * push the artifact to s3 bucket
             ```
             aws s3 <path of .war file> s3://<bucketname>
             ```

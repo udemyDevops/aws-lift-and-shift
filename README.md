@@ -86,14 +86,14 @@ sql dump file:
         ```
         aws s3 cp s3://<bucket name>/<folder name>/<artifact name> <destination>
         ```
-            assuming no sub folder in the s3 bucket
+        - assuming no sub folder in the s3 bucket
 
-            eg: aws s3 cp s3://vprofile-project/vprofile-v2.war /tmp/
+        >eg: aws s3 cp s3://vprofile-project/vprofile-v2.war /tmp/
 
 
-            if there is any sub folder
+        - if there is any sub folder
 
-            eg: aws s3 cp s3://vprofile-project/artifact-folder/vprofile-v2.war /tmp/
+        >eg: aws s3 cp s3://vprofile-project/artifact-folder/vprofile-v2.war /tmp/
         
         * deploy the artifact
             - first stop the tomcat service

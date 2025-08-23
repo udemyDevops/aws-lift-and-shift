@@ -128,7 +128,7 @@ sql dump file:
 
 * Setting up load balancer
     - create a target group of type 'instances'
-        * select protocol HTTP and port 8080 (for tomcat) also in health check ---> advanced setting ---> health check port --> override --> 8080 ---> next --> select the app server instance and port 8080 --> click 'include as pendin below' --> create target group
+        * select protocol HTTP and port 8080 (for tomcat) also in health check ---> advanced setting ---> health check port --> override --> 8080 ---> next --> select the app server instance and port 8080 --> click 'include as pending below' --> create target group
     - Create a certificate for the domain in ACM (aws certificate manager) to use HTTPS port for ALB
     - Create ALB and add CNAME record for its endpoint (u&p -- admin_vp)
         * use its endpoint for HTTP
